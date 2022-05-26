@@ -30,6 +30,11 @@ import com.example.android.marsphotos.databinding.GridViewItemBinding
  */
 class OverviewFragment : Fragment() {
 
+    companion object {
+        val LETTER = "letter"
+        val SEARCH_PREFIX = "https://www.google.com/search?q="
+    }
+
     private val viewModel: OverviewViewModel by viewModels()
 
     /**

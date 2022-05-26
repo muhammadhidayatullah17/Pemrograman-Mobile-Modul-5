@@ -1,5 +1,7 @@
 package com.example.android.marsphotos.overview
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -20,11 +22,11 @@ class PhotoGridAdapter : ListAdapter<MarsPhoto,
 
     companion object DiffCallback : DiffUtil.ItemCallback<MarsPhoto>() {
         override fun areItemsTheSame(oldItem: MarsPhoto, newItem: MarsPhoto): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem.name == newItem.name
         }
 
         override fun areContentsTheSame(oldItem: MarsPhoto, newItem: MarsPhoto): Boolean {
-            return oldItem.imgSrcUrl == newItem.imgSrcUrl
+            return oldItem.imgUrl == newItem.imgUrl
         }
     }
 
@@ -39,5 +41,11 @@ class PhotoGridAdapter : ListAdapter<MarsPhoto,
     override fun onBindViewHolder(holder: PhotoGridAdapter.MarsPhotoViewHolder, position: Int) {
         val marsPhoto = getItem(position)
         holder.bind(marsPhoto)
+
+        holder.itemView.setOnClickListener {
+            val queryUrl: Uri = Uri.parse("${OverviewFragment.SEARCH_PREFIX}${marsPhoto.name}")
+            val intent = Intent(Intent.ACTION_VIEW, queryUrl)
+            holder.itemView.context.startActivity(intent)
+        }
     }
 }
